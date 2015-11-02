@@ -27,6 +27,7 @@ public class MainFrame extends JFrame{
         JButton b1 = new JButton("one");
         JButton b2 = new JButton("two");
         JButton b3 = new JButton("three");
+        JButton b4 = new JButton("four");
 
         pane.add(b1);
         pane.add(b2);
