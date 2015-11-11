@@ -3,7 +3,7 @@ import view.MainFrame;
 import javax.swing.*;
 
 /**
- * Created by Анатолий on 01.11.2015.
+ * Created by Anatoliy on 01.11.2015.
  */
 public class EntryPoint {
 
