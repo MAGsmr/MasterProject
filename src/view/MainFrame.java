@@ -21,6 +21,7 @@ public class MainFrame extends JFrame{
 
         Insets insets = getInsets();
         setSize(640 + insets.left + insets.right, 480 + insets.top + insets.bottom);
+        setLocation(500,100);
         setResizable(false);
         setVisible(true);
     }

@@ -16,9 +16,10 @@ public class EntryPoint {
         mainFrame.setTitle("Master's Project");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setVisible(true);*/
+        final MainFrame mainFrame = new MainFrame();
         SwingUtilities.invokeLater(
                 new Runnable(){
-                    public void run(){new MainFrame().setupUI();}
+                    public void run(){mainFrame.setupUI();}
                 }
         );
     }
