@@ -3,14 +3,22 @@ package view;
 import listeners.LoadProjectionButtonListener;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Anatoliy on 01.11.2015.
  */
 public class MainFrame extends JFrame{
+
+    private JButton firstProjectionButton;
+    private JButton secondProjectionButton;
+    private JButton thirdProjectionButton;
+
+    private Map<String, JPanel> allProjectionPanel = new HashMap<String, JPanel>();
 
     public void setupUI() {
         setDefaultLookAndFeelDecorated(true);
@@ -30,25 +38,12 @@ public class MainFrame extends JFrame{
         pane.setLayout(null);
 
         //create buttons
-        JButton firstProjectionButton = new JButton("Загрузить проекцию");
-        JButton secondProjectionButton = new JButton("Загрузить проекцию");
-        JButton thirdProjectionButton = new JButton("Загрузить проекцию");
-
-        //create panels for projection
-        JPanel firstProjectionPanel = new JPanel();
-        JPanel secondProjectionPanel = new JPanel();
-        JPanel thirdProjectionPanel = new JPanel();
+        firstProjectionButton = new JButton("Загрузить проекцию");
+        secondProjectionButton = new JButton("Загрузить проекцию");
+        thirdProjectionButton = new JButton("Загрузить проекцию");
 
         //create listeners
         ActionListener loadProjectionListener = new LoadProjectionButtonListener();
-
-        //add components to pane
-        pane.add(firstProjectionButton);
-        pane.add(secondProjectionButton);
-        pane.add(thirdProjectionButton);
-        pane.add(firstProjectionPanel);
-        pane.add(secondProjectionPanel);
-        pane.add(thirdProjectionPanel);
 
         Insets insets = pane.getInsets();
 
@@ -66,17 +61,29 @@ public class MainFrame extends JFrame{
         thirdProjectionButton.setActionCommand("loadThirdProjection");
         thirdProjectionButton.addActionListener(loadProjectionListener);
 
-        //configure panels
-        firstProjectionPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        firstProjectionPanel.setBackground(Color.white);
-        firstProjectionPanel.setBounds(40 + insets.left, 40 + insets.top, 160, 240);
 
-        secondProjectionPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        secondProjectionPanel.setBackground(Color.white);
-        secondProjectionPanel.setBounds(240 + insets.left, 40 + insets.top, 160, 240);
+        //add components to pane
+        pane.add(firstProjectionButton);
+        pane.add(secondProjectionButton);
+        pane.add(thirdProjectionButton);
 
-        thirdProjectionPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        thirdProjectionPanel.setBackground(Color.white);
-        thirdProjectionPanel.setBounds(440 + insets.left, 40 + insets.top, 160, 240);
+        pane.add(createProjectionPanel("firstProjection", 40, 40));
+        pane.add(createProjectionPanel("secondProjection", 240, 40));
+        pane.add(createProjectionPanel("thirdProjection", 440, 40));
+    }
+
+    private JPanel createProjectionPanel(String projection, int x, int y){
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createLineBorder(Color.black));
+        panel.setBackground(Color.white);
+        panel.setBounds(x + getInsets().left, y + getInsets().top, 160, 240);
+        allProjectionPanel.put(projection, panel);
+        return panel;
+    }
+
+    public void setProjectionImageToPanel(BufferedImage bufferedImage, String projection){
+        JPanel panel = allProjectionPanel.get(projection);
+        Graphics g = panel.getGraphics();
+        g.drawImage(bufferedImage, 0, 0, panel.getWidth(), panel.getHeight(), null);
     }
 }

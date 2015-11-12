@@ -10,8 +10,8 @@ import java.io.File;
  */
 public class Converter {
 
-    public static double[][] convertPixelsToMatrix(Pixels[][] pixels){
-        double[][] matrix = new double[pixels.length][pixels[0].length];
+    public static int[][] convertPixelsToMatrix(Pixels[][] pixels){
+        int[][] matrix = new int[pixels.length][pixels[0].length];
 
         return matrix;
     }

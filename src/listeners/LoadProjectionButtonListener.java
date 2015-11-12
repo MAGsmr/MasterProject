@@ -1,10 +1,11 @@
 package listeners;
 
-import view.MainFrame;
+import controller.MainManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,10 +20,23 @@ public class LoadProjectionButtonListener implements ActionListener{
         final JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(((JButton)e.getSource()).getParent());
 
-        switch(commandLine){
-            case "loadFirstProjection": break;
-            case "loadSecondProjection": break;
-            case "loadThirdProjection": break;
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+
+            switch (commandLine) {
+                case "loadFirstProjection": {
+                    MainManager.loadImageFromFile(file, "firstProjection");
+                    break;
+                }
+                case "loadSecondProjection":{
+                    MainManager.loadImageFromFile(file, "secondProjection");
+                    break;
+                }
+                case "loadThirdProjection":{
+                    MainManager.loadImageFromFile(file, "thirdProjection");
+                    break;
+                }
+            }
         }
     }
 }
