@@ -1,6 +1,7 @@
 package listeners;
 
 import controller.MainManager;
+import modeling.MyConstants;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,22 +19,22 @@ public class LoadProjectionButtonListener implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String commandLine = e.getActionCommand();
         final JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showOpenDialog(((JButton)e.getSource()).getParent());
+        int result = fileChooser.showOpenDialog(((JMenuItem)e.getSource()).getParent());
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
 
             switch (commandLine) {
-                case "loadFirstProjection": {
-                    MainManager.loadImageFromFile(file, "firstProjection");
+                case MyConstants.TOP_PROJECTION: {
+                    MainManager.loadImageFromFile(file, MyConstants.TOP_PROJECTION);
                     break;
                 }
-                case "loadSecondProjection":{
-                    MainManager.loadImageFromFile(file, "secondProjection");
+                case MyConstants.FRONT_PROJECTION:{
+                    MainManager.loadImageFromFile(file, MyConstants.FRONT_PROJECTION);
                     break;
                 }
-                case "loadThirdProjection":{
-                    MainManager.loadImageFromFile(file, "thirdProjection");
+                case MyConstants.LEFT_PROJECTION:{
+                    MainManager.loadImageFromFile(file, MyConstants.LEFT_PROJECTION);
                     break;
                 }
             }

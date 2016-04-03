@@ -1,5 +1,7 @@
 package controller;
 
+import modeling.Converter;
+import modeling.Model;
 import view.MainFrame;
 
 import javax.imageio.ImageIO;
@@ -13,9 +15,14 @@ import java.io.IOException;
 public class MainManager {
 
     private static MainFrame mainFrame;
+    private static Model model;
 
     public static void setMainFrame(MainFrame mainFrame) {
         MainManager.mainFrame = mainFrame;
+    }
+
+    public static void init(){
+        model = new Model();
     }
 
     public static void loadImageFromFile(File file, String projection) {
@@ -25,6 +32,7 @@ public class MainManager {
         } catch (IOException e) {
         }
 
-        mainFrame.setProjectionImageToPanel(img, projection);
+        mainFrame.setProjectionImageToPanel(img, projection); //add to view
+        model.addProjectionMatrix(projection, Converter.convertTo2DWithoutUsingGetRGB(img)); //prepared img to analysis
     }
 }

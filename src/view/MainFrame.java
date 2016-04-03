@@ -1,7 +1,12 @@
 package view;
 
+import com.sun.j3d.exp.swing.JCanvas3D;
+import controller.MainManager;
 import listeners.LoadProjectionButtonListener;
+import modeling.MyConstants;
+import test3d.Hello3D;
 
+import javax.media.j3d.GraphicsConfigTemplate3D;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -14,9 +19,9 @@ import java.util.Map;
  */
 public class MainFrame extends JFrame{
 
-    private JButton firstProjectionButton;
-    private JButton secondProjectionButton;
-    private JButton thirdProjectionButton;
+    private JMenuBar menuBar;
+    private JMenu menu;
+    private JMenuItem menuItem;
 
     private Map<String, JPanel> allProjectionPanel = new HashMap<String, JPanel>();
 
@@ -27,56 +32,63 @@ public class MainFrame extends JFrame{
 
         initComponents(getContentPane());
 
+        MainManager.init();
+
         Insets insets = getInsets();
-        setSize(640 + insets.left + insets.right, 480 + insets.top + insets.bottom);
-        setLocation(500,100);
+        setSize(1280 + insets.left + insets.right, 865 + insets.top + insets.bottom);
+        setLocation(200,0);
+        setTitle("Simple 3D model generator");
         setResizable(false);
         setVisible(true);
     }
 
     private void initComponents(Container pane) {
         pane.setLayout(null);
-
-        //create buttons
-        firstProjectionButton = new JButton("Загрузить проекцию");
-        secondProjectionButton = new JButton("Загрузить проекцию");
-        thirdProjectionButton = new JButton("Загрузить проекцию");
+        Insets insets = pane.getInsets();
 
         //create listeners
         ActionListener loadProjectionListener = new LoadProjectionButtonListener();
 
-        Insets insets = pane.getInsets();
+        menuBar = new JMenuBar();
 
-        //configure buttons
-        Dimension size = firstProjectionButton.getPreferredSize();
-        firstProjectionButton.setBounds(40 + insets.left, 300 + insets.top, 160, 40);
-        firstProjectionButton.setActionCommand("loadFirstProjection");
-        firstProjectionButton.addActionListener(loadProjectionListener);
+        menu = new JMenu("Load");
+        menuBar.add(menu);
 
-        secondProjectionButton.setBounds(240 + insets.left, 300 + insets.top, 160, 40);
-        secondProjectionButton.setActionCommand("loadSecondProjection");
-        secondProjectionButton.addActionListener(loadProjectionListener);
+        menuItem = new JMenuItem("Top projection");
+        menuItem.setActionCommand(MyConstants.TOP_PROJECTION);
+        menuItem.addActionListener(loadProjectionListener);
+        menu.add(menuItem);
+        menuItem = new JMenuItem("Front projection");
+        menuItem.setActionCommand(MyConstants.FRONT_PROJECTION);
+        menuItem.addActionListener(loadProjectionListener);
+        menu.add(menuItem);
+        menuItem = new JMenuItem("Left projection");
+        menuItem.setActionCommand(MyConstants.LEFT_PROJECTION);
+        menuItem.addActionListener(loadProjectionListener);
+        menu.add(menuItem);
 
-        thirdProjectionButton.setBounds(440 + insets.left, 300 + insets.top, 160, 40);
-        thirdProjectionButton.setActionCommand("loadThirdProjection");
-        thirdProjectionButton.addActionListener(loadProjectionListener);
+        setJMenuBar(menuBar);
 
+        pane.add(createProjectionPanel(MyConstants.TOP_PROJECTION, 5, 5));
+        pane.add(createProjectionPanel(MyConstants.FRONT_PROJECTION, 640, 5));
+        pane.add(createProjectionPanel(MyConstants.LEFT_PROJECTION, 5, 410));
+        JPanel panel = createProjectionPanel(MyConstants.AXONOMETRIC, 640, 410);
 
-        //add components to pane
-        pane.add(firstProjectionButton);
-        pane.add(secondProjectionButton);
-        pane.add(thirdProjectionButton);
+        JCanvas3D canvas3D = new JCanvas3D(new GraphicsConfigTemplate3D());
+        canvas3D.setSize(100,100);
+        panel.setLayout(new BorderLayout());
+        panel.add(canvas3D);
+        Hello3D.init(canvas3D);
+        //Position.init(canvas3D.getOffscreenCanvas3D());
 
-        pane.add(createProjectionPanel("firstProjection", 40, 40));
-        pane.add(createProjectionPanel("secondProjection", 240, 40));
-        pane.add(createProjectionPanel("thirdProjection", 440, 40));
+        pane.add(panel);
     }
 
     private JPanel createProjectionPanel(String projection, int x, int y){
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createLineBorder(Color.black));
+        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK,1),projection));
         panel.setBackground(Color.white);
-        panel.setBounds(x + getInsets().left, y + getInsets().top, 160, 240);
+        panel.setBounds(x, y, 630, 400);
         allProjectionPanel.put(projection, panel);
         return panel;
     }
@@ -84,6 +96,6 @@ public class MainFrame extends JFrame{
     public void setProjectionImageToPanel(BufferedImage bufferedImage, String projection){
         JPanel panel = allProjectionPanel.get(projection);
         Graphics g = panel.getGraphics();
-        g.drawImage(bufferedImage, 0, 0, panel.getWidth(), panel.getHeight(), null);
+        g.drawImage(bufferedImage, 5, 18, panel.getWidth()-10, panel.getHeight()-23, null);
     }
 }
