@@ -2,6 +2,7 @@ package controller;
 
 import modeling.Converter;
 import modeling.Model;
+import nets.Teacher;
 import view.MainFrame;
 
 import javax.imageio.ImageIO;
@@ -34,5 +35,8 @@ public class MainManager {
 
         mainFrame.setProjectionImageToPanel(img, projection); //add to view
         model.addProjectionMatrix(projection, Converter.convertTo2DWithoutUsingGetRGB(img)); //prepared img to analysis
+    }
+    public static void teachNeuroNet(String path){
+
     }
 }

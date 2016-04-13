@@ -3,6 +3,7 @@ package view;
 import com.sun.j3d.exp.swing.JCanvas3D;
 import controller.MainManager;
 import listeners.LoadProjectionButtonListener;
+import listeners.PressMenuItemListener;
 import modeling.MyConstants;
 import test3d.Hello3D;
 
@@ -10,6 +11,9 @@ import javax.media.j3d.GraphicsConfigTemplate3D;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,18 +46,18 @@ public class MainFrame extends JFrame{
         setVisible(true);
     }
 
-    private void initComponents(Container pane) {
+    private void initComponents(final Container pane) {
         pane.setLayout(null);
         Insets insets = pane.getInsets();
 
         //create listeners
         ActionListener loadProjectionListener = new LoadProjectionButtonListener();
+        ActionListener pressMenuItemListener = new PressMenuItemListener();
 
         menuBar = new JMenuBar();
 
         menu = new JMenu("Load");
         menuBar.add(menu);
-
         menuItem = new JMenuItem("Top projection");
         menuItem.setActionCommand(MyConstants.TOP_PROJECTION);
         menuItem.addActionListener(loadProjectionListener);
@@ -67,12 +71,19 @@ public class MainFrame extends JFrame{
         menuItem.addActionListener(loadProjectionListener);
         menu.add(menuItem);
 
+        menu = new JMenu("NeuroNet");
+        menuBar.add(menu);
+        menuItem = new JMenuItem("Teach");
+        menuItem.setActionCommand(MyConstants.TEACH_NEURO_NET);
+        menuItem.addActionListener(pressMenuItemListener);
+        menu.add(menuItem);
+
         setJMenuBar(menuBar);
 
         pane.add(createProjectionPanel(MyConstants.TOP_PROJECTION, 5, 5));
         pane.add(createProjectionPanel(MyConstants.FRONT_PROJECTION, 640, 5));
         pane.add(createProjectionPanel(MyConstants.LEFT_PROJECTION, 5, 410));
-        JPanel panel = createProjectionPanel(MyConstants.AXONOMETRIC, 640, 410);
+        final JPanel panel = createProjectionPanel(MyConstants.AXONOMETRIC, 640, 410);
 
         JCanvas3D canvas3D = new JCanvas3D(new GraphicsConfigTemplate3D());
         canvas3D.setSize(100,100);

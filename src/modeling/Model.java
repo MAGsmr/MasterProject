@@ -1,6 +1,7 @@
 package modeling;
 
 import nets.Perceptron;
+import nets.Teacher;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ public class Model {
 
     private Map<String,int[][]> allProjectionMatrix = new HashMap<String, int[][]>();
     private Perceptron perceptron;
+    private Teacher teacher;
 
     public Model(){
         perceptron = new Perceptron(10,10); //initializing perceptron by number of neurons and img dimensions
@@ -31,5 +33,9 @@ public class Model {
 
     public void addProjectionMatrix(String projection, int[][] projectionMatrix){
         allProjectionMatrix.put(projection, projectionMatrix);
+    }
+
+    public void teachPerceptron(String path){
+
     }
 }
