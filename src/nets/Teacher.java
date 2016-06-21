@@ -60,8 +60,10 @@ public class Teacher {
             i++;
         }
 
-        // инициализация начальных весов
-        perceptron.initWeights();
+        // инициализация начальных весов, если ещё не были проинициализированы
+        if (!perceptron.isWeightsWasInitialized()) {
+            perceptron.initWeights();
+        }
 
         // получение пиксельных массивов каждого изображения
         // и обучение n раз каждой выборке

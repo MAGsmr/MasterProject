@@ -33,8 +33,9 @@ public class MainManager {
         } catch (IOException e) {
         }
 
-        mainFrame.setProjectionImageToPanel(img, projection); //add to view
         model.addProjectionMatrix(projection, Converter.convertTo2DWithoutUsingGetRGB(img)); //prepared img to analysis
+        model.addProjectionImage(projection,img);
+        mainFrame.setProjectionImageToPanel(img, projection); //add to view
     }
     public static void teachNeuroNet(String path){
 

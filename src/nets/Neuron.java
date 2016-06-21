@@ -47,6 +47,16 @@ public class Neuron
     }
 
     /**
+     * Инициализация начальных весов синапсов
+     * @param weights - заранее заданные веса
+     */
+    public void initWeights(int[] weights){
+        if (w.length == weights.length){
+            w = weights;
+        }
+    }
+
+    /**
      * Модификация весов синапсов для обучения
      * @param v - скорость обучения
      * @param d - разница между выходом нейрона и нужным выходом
@@ -88,5 +98,9 @@ public class Neuron
         else {
             return 0;
         }
+    }
+
+    public int[] getWeights() {
+        return w;
     }
 }

@@ -3,6 +3,8 @@ package modeling;
 import nets.Perceptron;
 import nets.Teacher;
 
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,31 +13,42 @@ import java.util.Map;
  */
 public class Model {
 
-    private Map<String,int[][]> allProjectionMatrix = new HashMap<String, int[][]>();
+    private Map<String, int[][]> allProjectionMatrix = new HashMap<>();
+    private Map<String, BufferedImage> allProjectionImages = new HashMap<>();
+    private Map<String, Perceptron> allPerceptons = new HashMap<>();
     private Perceptron perceptron;
     private Teacher teacher;
 
-    public Model(){
-        perceptron = new Perceptron(10,10); //initializing perceptron by number of neurons and img dimensions
+    public Model() {
+        perceptron = new Perceptron(5, 1280 * 720); //initializing perceptron by number of neurons and img dimensions
+        allPerceptons.put(MyConstants.TOP_PERCEPTRON, perceptron);
+        perceptron = new Perceptron(5, 1280 * 720);
+        allPerceptons.put(MyConstants.FRONT_PERCEPTRON, perceptron);
+        perceptron = new Perceptron(5, 1280 * 720);
+        allPerceptons.put(MyConstants.LEFT_PERCEPTRON, perceptron);
     }
 
-    public Map<String, int[][]> getAllProjectionMatrix() {
-        return allProjectionMatrix;
+    public Perceptron getPerceptron(String perceptron) {
+        return allPerceptons.get(perceptron);
     }
 
-    public void setAllProjectionMatrix(Map<String, int[][]> allProjectionMatrix) {
-        this.allProjectionMatrix = allProjectionMatrix;
-    }
-
-    public int[][] getProjectionMatrixByKey(String projection){
+    public int[][] getProjectionMatrix(String projection) {
         return allProjectionMatrix.get(projection);
     }
 
-    public void addProjectionMatrix(String projection, int[][] projectionMatrix){
+    public void addProjectionMatrix(String projection, int[][] projectionMatrix) {
         allProjectionMatrix.put(projection, projectionMatrix);
     }
 
-    public void teachPerceptron(String path){
+    public void addProjectionImage(String projection, BufferedImage image) {
+        allProjectionImages.put(projection, image);
+    }
+
+    public BufferedImage getProjectionImage(String projection) {
+        return allProjectionImages.get(projection);
+    }
+
+    public void teachPerceptrons(String path) {
 
     }
 }
